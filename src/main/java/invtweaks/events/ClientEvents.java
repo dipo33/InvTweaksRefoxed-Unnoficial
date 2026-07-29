@@ -70,20 +70,6 @@ public class ClientEvents {
                 .orElse(null);
     }
 
-    private static boolean showsEffectSidebar(Screen screen) {
-        if (!(screen instanceof AbstractContainerScreen<?> containerScreen)) return false;
-
-        // Check if player has effects and there's room to display them
-        if (Minecraft.getInstance().player != null && !Minecraft.getInstance().player.getActiveEffects().isEmpty()) {
-            int rightEdge = containerScreen.getGuiLeft() + containerScreen.getXSize();
-            int availableWidth = screen.width - rightEdge - 2;
-            return availableWidth >= 32; // mimics EffectRenderingInventoryScreen.canSeeEffects()
-        }
-
-        return false;
-    }
-
-
     private static final Set<Screen> screensWithExtSort = Collections.newSetFromMap(new WeakHashMap<>());
     @SubscribeEvent
     public static void onScreenEventInit(ScreenEvent.Init.Post event) {
