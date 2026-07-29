@@ -85,18 +85,16 @@ public class ServerEvents {
         IItemHandler cap = ent.getCapability(Capabilities.ItemHandler.ENTITY);
         if (cap != null) {
             TagKey<Item> altTag = null;
-            if (item instanceof TieredItem) {
-                if (item instanceof SwordItem) {
-                    altTag = ItemTags.SWORDS;
-                } else if (item instanceof PickaxeItem) {
-                    altTag = ItemTags.PICKAXES;
-                } else if (item instanceof AxeItem) {
-                    altTag = ItemTags.AXES;
-                } else if (item instanceof ShovelItem) {
-                    altTag = ItemTags.SHOVELS;
-                } else if (item instanceof HoeItem) {
-                    altTag = ItemTags.HOES;
-                }
+            if (item instanceof SwordItem) {
+                altTag = ItemTags.SWORDS;
+            } else if (item instanceof PickaxeItem) {
+                altTag = ItemTags.PICKAXES;
+            } else if (item instanceof AxeItem) {
+                altTag = ItemTags.AXES;
+            } else if (item instanceof ShovelItem) {
+                altTag = ItemTags.SHOVELS;
+            } else if (item instanceof HoeItem) {
+                altTag = ItemTags.HOES;
             }
 
             TagKey<Item> finalAltTag = altTag;

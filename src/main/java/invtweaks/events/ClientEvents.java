@@ -20,7 +20,6 @@ import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
-import net.minecraft.client.gui.screens.inventory.EffectRenderingInventoryScreen;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -71,6 +70,20 @@ public class ClientEvents {
                 .orElse(null);
     }
 
+    private static boolean showsEffectSidebar(Screen screen) {
+        if (!(screen instanceof AbstractContainerScreen<?> containerScreen)) return false;
+
+        // Check if player has effects and there's room to display them
+        if (Minecraft.getInstance().player != null && !Minecraft.getInstance().player.getActiveEffects().isEmpty()) {
+            int rightEdge = containerScreen.getGuiLeft() + containerScreen.getXSize();
+            int availableWidth = screen.width - rightEdge - 2;
+            return availableWidth >= 32; // mimics EffectRenderingInventoryScreen.canSeeEffects()
+        }
+
+        return false;
+    }
+
+
     private static final Set<Screen> screensWithExtSort = Collections.newSetFromMap(new WeakHashMap<>());
     @SubscribeEvent
     public static void onScreenEventInit(ScreenEvent.Init.Post event) {
@@ -96,7 +109,7 @@ public class ClientEvents {
             ContOverride override = InvTweaksConfig.getPlayerContOverride(Minecraft.getInstance().player, screen.getClass().getName(), screen.getMenu().getClass().getName());
             var isSortDisabled = Optional.ofNullable(override).filter(ContOverride::isSortDisabled).isPresent();
 
-            if (!(screen instanceof EffectRenderingInventoryScreen) && !isSortDisabled) {
+            if (!screen.showsActiveEffects() && !isSortDisabled) {
                 int x = InvTweaksConfig.NO_POS_OVERRIDE, y = InvTweaksConfig.NO_POS_OVERRIDE;
                 if (override != null) {
                     x = override.getX();

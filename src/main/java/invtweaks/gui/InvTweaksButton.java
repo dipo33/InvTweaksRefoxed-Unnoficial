@@ -2,10 +2,10 @@ package invtweaks.gui;
 
 import invtweaks.InvTweaksMod;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.client.gui.widget.ExtendedButton;
-
 
 public class InvTweaksButton extends ExtendedButton {
     protected static final ResourceLocation button =
@@ -27,6 +27,6 @@ public class InvTweaksButton extends ExtendedButton {
                         && mouseY >= this.getY()
                         && mouseX < this.getX() + this.width
                         && mouseY < this.getY() + this.height;
-        graphics.blit(button, getX(), getY(), tx, ty + (isHovered ? 16 : 0), 14, 16);
+        graphics.blit(RenderType::guiTextured, button, getX(), getY(), tx, ty + (isHovered ? 16 : 0), 14, 16, 256, 256);
     }
 }

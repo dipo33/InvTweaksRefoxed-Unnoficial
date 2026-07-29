@@ -3,6 +3,7 @@ package invtweaks.config;
 import com.electronwill.nightconfig.core.CommentedConfig;
 import invtweaks.InvTweaksMod;
 import net.minecraft.ResourceLocationException;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -61,7 +62,7 @@ public class Category {
                 return Optional.empty();
             }
         } else if (parts[0].equals("/isFood")) {
-            return Optional.of(stack -> stack.getFoodProperties(null) != null);
+            return Optional.of(stack -> stack.get(DataComponents.FOOD) != null);
         } else { // default to standard item checking
             try {
                 return Optional.of(
